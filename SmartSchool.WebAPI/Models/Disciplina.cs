@@ -9,7 +9,7 @@ namespace SmartSchool.WebAPI.Models
     {
         public Disciplina() { }
 
-        public Disciplina(int id, string nome, string professorId)
+        public Disciplina(int id, string nome, int professorId)
         {
             Id = id;
             Nome = nome;
@@ -18,7 +18,7 @@ namespace SmartSchool.WebAPI.Models
 
         public int Id { get; set; }
         public string Nome { get; set; }
-        public string ProfessorId { get; set; }
+        public int ProfessorId { get; set; }
         public Professor Professor { get; set; }
         public IEnumerable<AlunoDisciplina> AlunosDisciplinas { get; set; }
     }

@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SmartSchool.WebAPI.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace SmartSchool.API
 {
@@ -22,7 +24,13 @@ namespace SmartSchool.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddDbContext<SmartContext>(
+                context => context.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
+            );
+
+
+            services.AddControllers();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +44,7 @@ namespace SmartSchool.API
             {
                 app.UseExceptionHandler("/Error");
             }
-// app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 
