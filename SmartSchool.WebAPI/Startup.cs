@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using SmartSchool.WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace SmartSchool.API
 {
@@ -28,15 +29,19 @@ namespace SmartSchool.API
                 context => context.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
             );
 
-            //services.AddSingleton<IRepository, Repository>();
-            //services.AddTransient<IRepository, Repository>();
-            services.AddScoped<IRepository, Repository>();
-
             services.AddControllers()
+            /*TIRARO LOOPING*/
             .AddNewtonsoftJson(
                 opt => opt.SerializerSettings.ReferenceLoopHandling =
                         Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
+            //services.AddSingleton<IRepository, Repository>();
+            //services.AddTransient<IRepository, Repository>();
             
+            services.AddScoped<IRepository, Repository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
