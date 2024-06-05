@@ -6,15 +6,20 @@ using System.Threading.Tasks;
 using SmartSchool.WebAPI.Models;
 using  SmartSchool.WebAPI.Data;
 using Microsoft.EntityFrameworkCore;
-using SmartSchool.WebAPI.Dtos;
+using SmartSchool.WebAPI.V1.Dtos;
 using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace SmartSchool.API.Controllers
+namespace SmartSchool.API.V2.Controllers
 {
-    [Route("api/[controller]")]
+    /// <summary>
+    /// Versão 2 do meu controlador de Aluno
+    /// </summary>
+    
     [ApiController]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AlunoController : ControllerBase
     {
 
@@ -25,7 +30,10 @@ namespace SmartSchool.API.Controllers
             _mapper = mapper;
             _repo = repo;
         }
-        
+        /// <summary>
+        /// Método responsável por retornar todos os alunos.
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public IActionResult Get()
         {
@@ -33,15 +41,12 @@ namespace SmartSchool.API.Controllers
             var alunos = _repo.GetAllAlunos(true);
             return Ok(_mapper.Map<IEnumerable<AlunoDto>>(alunos));
         }
-
-        [HttpGet("getRegister")]
-        public IActionResult getRegister()
-        {
-            return Ok(new AlunoRegistrarDto());
-        }
-
-
-        // api/aluno
+        
+        /// <summary>
+        /// Método responsável por retornar apenas um Aluno por meio do Código ID.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
@@ -80,22 +85,6 @@ namespace SmartSchool.API.Controllers
                 return Created($"/api/aluno/{model.Id}", _mapper.Map<AlunoDto>(aluno));
             }
             return BadRequest("Aluno não caastrado");
-        }
-
-        [HttpPatch("{id}")]
-        public IActionResult Patch(int id, AlunoRegistrarDto model)
-        {
-            var aluno = _repo.GetAlunoById(id);
-            if(aluno == null) return BadRequest("Aluno não encontrado");
-
-            _mapper.Map(model, aluno);
-
-            _repo.Update(aluno);
-            if(_repo.SaveChanges())
-            {
-                return Created($"/api/aluno/{model.Id}", _mapper.Map<AlunoDto>(aluno));
-            }
-            return BadRequest("Aluno não cadastrado");
         }
 
         [HttpDelete("{id}")]
