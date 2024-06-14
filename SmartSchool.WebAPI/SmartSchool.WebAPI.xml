@@ -9,7 +9,7 @@
             Versão 1 do meu controlador de Alunos
             </summary>
         </member>
-        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Get">
+        <member name="M:SmartSchool.API.V1.Controllers.AlunoController.Get(SmartSchool.WebAPI.Helpers.PageParams)">
             <summary>
             Método responsável por retornar todos os alunos.
             </summary>
