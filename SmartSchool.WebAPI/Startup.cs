@@ -16,6 +16,9 @@ using System.Reflection;
 using SmartSchool.API.V1.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+using System.Globalization;
+
 
 namespace SmartSchool.API
 {
@@ -32,8 +35,14 @@ namespace SmartSchool.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SmartContext>(
-                context => context.UseSqlite(Configuration.GetConnectionString("DefaultConnection"))
+                context => context.UseMySql(Configuration.GetConnectionString("MySqlConnection"),
+                new MySqlServerVersion(new Version(5, 7, 0)),
+                mySqlOptions => mySqlOptions.EnableRetryOnFailure())
             );
+
+            // Configuração da cultura padrão
+            CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
 
             services.AddControllers()
             /*TIRANDO LOOPING*/

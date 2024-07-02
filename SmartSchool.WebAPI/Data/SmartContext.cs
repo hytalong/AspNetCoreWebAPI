@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SmartSchool.WebAPI.Models;
+using System.Globalization;
 
 namespace SmartSchool.WebAPI.Data
 {
@@ -57,15 +58,17 @@ namespace SmartSchool.WebAPI.Data
                 });
             
             builder.Entity<Aluno>()
-                .HasData(new List<Aluno>(){
-                    new Aluno(1, 1, "Marta", "Kent", "33225555", DateTime.Parse("28/05/2005")),
-                    new Aluno(2, 2, "Paula", "Isabela", "3354288", DateTime.Parse("28/05/2005")),
-                    new Aluno(3, 3, "Laura", "Antonia", "55668899", DateTime.Parse("28/05/2005")),
-                    new Aluno(4, 4, "Luiza", "Maria", "6565659", DateTime.Parse("28/05/2005")),
-                    new Aluno(5, 5, "Lucas", "Machado", "565685415", DateTime.Parse("28/05/2005")),
-                    new Aluno(6, 6, "Pedro", "Alvares", "456454545", DateTime.Parse("28/05/2005")),
-                    new Aluno(7, 7, "Paulo", "José", "9874512", DateTime.Parse("28/05/2005"))
-                });
+    .HasData(new List<Aluno>{
+        new Aluno(1, 1, "Marta", "Kent", "33225555", DateTime.ParseExact("28/05/2005", "dd/MM/yyyy", CultureInfo.InvariantCulture)),
+        new Aluno(2, 2, "Paula", "Isabela", "3354288", DateTime.ParseExact("28/05/2005", "dd/MM/yyyy", CultureInfo.InvariantCulture)),
+        new Aluno(3, 3, "Laura", "Antonia", "55668899", DateTime.ParseExact("28/05/2005", "dd/MM/yyyy", CultureInfo.InvariantCulture)),
+        new Aluno(4, 4, "Luiza", "Maria", "6565659", DateTime.ParseExact("28/05/2005", "dd/MM/yyyy", CultureInfo.InvariantCulture)),
+        new Aluno(5, 5, "Lucas", "Machado", "565685415", DateTime.ParseExact("28/05/2005", "dd/MM/yyyy", CultureInfo.InvariantCulture)),
+        new Aluno(6, 6, "Pedro", "Alvares", "456454545", DateTime.ParseExact("28/05/2005", "dd/MM/yyyy", CultureInfo.InvariantCulture)),
+        new Aluno(7, 7, "Paulo", "José", "9874512", DateTime.ParseExact("28/05/2005", "dd/MM/yyyy", CultureInfo.InvariantCulture))
+    });
+
+
 
             builder.Entity<AlunoDisciplina>()
                 .HasData(new List<AlunoDisciplina>() {
