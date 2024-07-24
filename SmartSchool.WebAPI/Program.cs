@@ -20,7 +20,8 @@ namespace SmartSchool.API
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseStartup<Startup>()
+                                .UseUrls("https://localhost:5000"); // Adicione essa linha para configurar a URL
                 });
     }
 }
